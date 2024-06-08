@@ -13,7 +13,7 @@ jobs:
         run: npm install || yarn install
 
       - name: Build Vuetify
-        run: npm run build  # Replace with your build command (e.g., yarn build:dist)
+        run: npm run build-prod  # Replace with your build command (e.g., yarn build:dist)
 
       - name: Deploy
         uses: actions/upload-artifact@v3
