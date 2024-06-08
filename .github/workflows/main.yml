@@ -1,0 +1,41 @@
+name: Deploy to [production]
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Install dependencies
+        run: npm install || yarn install
+
+      - name: Build Vuetify
+        run: npm run build  # Replace with your build command (e.g., yarn build:dist)
+
+      - name: Deploy
+        uses: actions/upload-artifact@v3
+        with:
+          name: vuetify-dist
+          path: dist  # Replace with your build output directory
+
+  deploy:
+    runs-on: ubuntu-latest  # Adjust if you want deployment on a different runner
+    needs: build  # This job depends on the build job completing successfully
+    if: github.ref == 'refs/heads/main'  # Deploy only on push to master branch (adjust as needed)
+    environment: # Optional environment variables for deployment script
+      name: production  # Replace with your environment name
+      url: https://your-staging-url.com  # Replace with your deployment URL
+    steps:
+      - uses: actions/download-artifact@v3
+        with:
+          name: vuetify-dist
+
+      - name: Deploy to [production]  # Replace with your target environment name
+          
+        run: |  # Replace this script with your actual deployment script
+          # Example script (adjust based on your deployment method)
+          scp -r dist/* user@your-server.com:/path/to/deployment/directory
+
