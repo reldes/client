@@ -1,8 +1,6 @@
 import { defineStore } from 'pinia';
 import { router } from '@/router';
-import { fetchWrapper } from '@/utils/helpers/fetch-wrapper';
-
-const baseUrl = `${import.meta.env.VITE_API_URL}/users`;
+import api from '@/utils/helpers/api/api';
 
 export const useAuthStore = defineStore({
   id: 'auth',
@@ -10,24 +8,26 @@ export const useAuthStore = defineStore({
     // initialize state from local storage to enable user to stay logged in
     /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
     // @ts-ignore
+    token: JSON.parse(localStorage.getItem('token')),
+    // @ts-ignore
     user: JSON.parse(localStorage.getItem('user')),
     returnUrl: null
   }),
   actions: {
-    async login(username: string, password: string) {
-      const user = await fetchWrapper.post(`${baseUrl}/authenticate`, { username, password });
-
-      // update pinia state
-      this.user = user;
-      // store user details and jwt in local storage to keep user logged in between page refreshes
+    async login(email: string, password: string) {
+      const { access_token } = await api.auth.login({email: email, password: password});
+      this.token = access_token;
+      localStorage.setItem('token', JSON.stringify(access_token));
+      const { user } = await api.auth.me();
       localStorage.setItem('user', JSON.stringify(user));
-      // redirect to previous url or default to home page
-      router.push(this.returnUrl || '/dashboard');
+      await router.push('/');
     },
-    logout() {
+    async logout() {
       this.user = null;
       localStorage.removeItem('user');
-      router.push('/auth/login');
+      localStorage.removeItem('token');
+      await api.auth.logout();
+      await router.push('/auth/login');
     }
   }
 });

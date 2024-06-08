@@ -26,8 +26,9 @@ interface User {
 // Assuming you have a type/interface for your authentication store
 interface AuthStore {
   user: User | null;
+  token: string | null;
   returnUrl: string | null;
-  login(username: string, password: string): Promise<void>;
+  login(email: string, password: string): Promise<void>;
   logout(): void;
 }
 
@@ -38,7 +39,7 @@ router.beforeEach(async (to, from, next) => {
   const auth: AuthStore = useAuthStore();
 
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (authRequired && !auth.user) {
+    if (authRequired && !auth.token) {
       auth.returnUrl = to.fullPath;
       return next('/auth/login');
     } else next();

@@ -5,14 +5,13 @@ import { EyeInvisibleOutlined, EyeOutlined } from '@ant-design/icons-vue';
 import { useAuthStore } from '@/stores/auth';
 import { Form } from 'vee-validate';
 
-const checkbox = ref(false);
 const valid = ref(false);
 const show1 = ref(false);
-const password = ref('admin123');
-const username = ref('info@codedthemes.com');
+const username = ref('alex@mail.com');
+const password = ref('verystrongpassword');
 const passwordRules = ref([
   (v: string) => !!v || 'Password is required',
-  (v: string) => (v && v.length <= 10) || 'Password must be less than 10 characters'
+  // (v: string) => (v) || 'Password must be less than 10 characters'
 ]);
 const emailRules = ref([(v: string) => !!v || 'E-mail is required', (v: string) => /.+@.+\..+/.test(v) || 'E-mail must be valid']);
 
@@ -62,21 +61,6 @@ function validate(values: any, { setErrors }: any) {
           </v-btn>
         </template>
       </v-text-field>
-    </div>
-
-    <div class="d-flex align-center mt-4 mb-7 mb-sm-0">
-      <v-checkbox
-        v-model="checkbox"
-        :rules="[(v: any) => !!v || 'You must agree to continue!']"
-        label="Keep me sign in"
-        required
-        color="primary"
-        class="ms-n2"
-        hide-details
-      ></v-checkbox>
-      <div class="ml-auto">
-        <router-link to="/auth/login" class="text-darkText link-hover">Forgot Password?</router-link>
-      </div>
     </div>
     <v-btn color="primary" :loading="isSubmitting" block class="mt-5" variant="flat" size="large" :disabled="valid" type="submit">
       Login</v-btn
