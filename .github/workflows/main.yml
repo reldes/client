@@ -44,7 +44,7 @@ jobs:
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           sftp_only: true
           local_path: ./
-          remote_path: /home/ubuntu/client
+          remote_path: /var/www/client
           delete_remote_files: true
 
       # - name: Run deployment script (optional)
