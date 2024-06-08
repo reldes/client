@@ -40,7 +40,7 @@ jobs:
           user: ubuntu 
           key: ${{ secrets.SSH_PRIVATE_KEY }} 
 
-          source: ./dist 
+          source: /home/runner/work/client/client/vuetify-dist
           dest: /home/ubuntu/client 
           delete: true
 
