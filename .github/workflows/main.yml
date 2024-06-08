@@ -43,7 +43,7 @@ jobs:
           port: 22
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
           sftp_only: true
-          local_path: ./dist
+          local_path: ./
           remote_path: /home/ubuntu/client
           delete_remote_files: true
 
