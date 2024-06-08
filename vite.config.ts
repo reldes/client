@@ -29,7 +29,11 @@ export default defineConfig({
     }
   },
   build: {
-    chunkSizeWarningLimit: 1024 * 1024 // Set the limit to 1 MB
+    chunkSizeWarningLimit: 1024 * 1024,// Set the limit to 1 MB
+    outDir: 'dist',
+    assetsDir: '',
+    sourcemap: false,
+    minify: true,
   },
   optimizeDeps: {
     exclude: ['vuetify'],
