@@ -19,7 +19,7 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: vuetify-dist
-          path: dist  # Replace with your build output directory
+          path: dist
 
   deploy:
     runs-on: ubuntu-latest
@@ -36,17 +36,12 @@ jobs:
       - name: Deploy to production 
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          # username
           username: ubuntu
-          # your sftp server
           server: ${{ secrets.SERVER_HOST }}
-          # your sftp server port, default to 22
           port: 22
-          # you can copy private_key from your *.pem file, keep format
           ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
-          # will put all file under this path
-          local_path: /home/runner/work/client/client/vuetify-dist/dist
-          # files will copy to under remote_path
+          sftp_only: true
+          local_path: ./dist
           remote_path: /home/ubuntu/client
           delete_remote_files: true
 
