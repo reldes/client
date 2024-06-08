@@ -34,15 +34,21 @@ jobs:
           name: vuetify-dist
 
       - name: Deploy to production 
-        uses: sshuttle/ssh-deploy@v2
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          servers: ${{ secrets.SERVER_HOST }}
-          user: ubuntu 
-          key: ${{ secrets.SSH_PRIVATE_KEY }} 
-
-          source: ./dist 
-          dest: /home/ubuntu/client 
-          delete: true
+          # username
+          username: ubuntu
+          # your sftp server
+          server: ${{ secrets.SERVER_HOST }}
+          # your sftp server port, default to 22
+          port: 22
+          # you can copy private_key from your *.pem file, keep format
+          ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }}
+          # will put all file under this path
+          local_path: ./dist
+          # files will copy to under remote_path
+          remote_path: /home/ubuntu/client
+          delete_remote_files: true
 
       # - name: Run deployment script (optional)
       #   run: |  # Optional script to run commands on the server after deployment
