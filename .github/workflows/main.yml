@@ -1,4 +1,4 @@
-name: Deploy to [production]
+name: Deploy to production
 
 on:
   push:
@@ -22,20 +22,29 @@ jobs:
           path: dist  # Replace with your build output directory
 
   deploy:
-    runs-on: ubuntu-latest  # Adjust if you want deployment on a different runner
-    needs: build  # This job depends on the build job completing successfully
-    if: github.ref == 'refs/heads/main'  # Deploy only on push to master branch (adjust as needed)
-    environment: # Optional environment variables for deployment script
-      name: production  # Replace with your environment name
-      url: https://your-staging-url.com  # Replace with your deployment URL
+    runs-on: ubuntu-latest
+    needs: build
+    if: github.ref == 'refs/heads/main' 
+    environment:  
+      name: production 
+      url: https://openlab.org.ua  
     steps:
       - uses: actions/download-artifact@v3
         with:
           name: vuetify-dist
 
-      - name: Deploy to [production]  # Replace with your target environment name
-          
-        run: |  # Replace this script with your actual deployment script
-          # Example script (adjust based on your deployment method)
-          scp -r dist/* user@your-server.com:/path/to/deployment/directory
+      - name: Deploy to production 
+        uses: sshuttle/ssh-deploy@v2
+        with:
+          servers: ${{ secrets.SERVER_HOST }}
+          user: ubuntu 
+          key: ${{ secrets.SSH_PRIVATE_KEY }} 
+
+          source: ./dist 
+          dest: /home/ubuntu/client 
+          delete: true
+
+      # - name: Run deployment script (optional)
+      #   run: |  # Optional script to run commands on the server after deployment
+      #     bash deploy.sh
 
