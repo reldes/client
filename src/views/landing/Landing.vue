@@ -29,7 +29,7 @@
                   <div class="headline">Company info</div>
                 </v-card-title>
                 <v-card-text>
-                  <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform"
+                  <!-- <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform" -->
                   style="width: 140px; height: 140px;">
                   We are not a company. We hate companies. Just imagine us like the guys from the Silicon Valley series.
                 </v-card-text>
@@ -41,7 +41,7 @@
                   <div class="headline">We are hiring</div>
                 </v-card-title>
                 <v-card-text>
-                  <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform"
+                  <!-- <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform" -->
                   style="width: 140px; height: 140px;">
                   Are you a creative person? Do you like techy stuff? Complete the email form by writing your skills and
                   interests
@@ -54,7 +54,7 @@
                   <div class="headline">We are hiring</div>
                 </v-card-title>
                 <v-card-text>
-                  <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform"
+                  <!-- <img src="/frontend/web/images/crossplatform.png" alt="Cross-platform" -->
                   style="width: 140px; height: 140px;">
                   Are you a creative person? Do you like techy stuff? Complete the email form by writing your skills and
                   interests
