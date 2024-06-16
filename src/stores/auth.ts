@@ -20,7 +20,7 @@ export const useAuthStore = defineStore({
       localStorage.setItem('token', JSON.stringify(access_token));
       const { user } = await api.auth.me();
       localStorage.setItem('user', JSON.stringify(user));
-      await router.push('/');
+      await router.push('/dashboard');
     },
     async logout() {
       this.user = null;
