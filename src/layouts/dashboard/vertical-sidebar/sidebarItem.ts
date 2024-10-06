@@ -31,7 +31,6 @@ const sidebarItem: menu[] = [
 
 async function getSidebarItems(): Promise<menu[]> {
   const experiments = await api.experiment.getExperiments();
-  console.log('items', experiments);
   const experimentItems = experiments ? experiments.map(experiment => ({
     title: experiment.title,
     // icon: ExperimentOutlined, // Replace with an appropriate icon
