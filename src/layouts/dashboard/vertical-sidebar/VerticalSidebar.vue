@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { shallowRef, onMounted } from 'vue';
 import { useCustomizerStore } from '../../../stores/customizer';
-import sidebarItems from './sidebarItem';
+import sidebarItems, { type menu } from './sidebarItem';
 
 import NavGroup from './NavGroup/NavGroup.vue';
 import NavItem from './NavItem/NavItem.vue';
@@ -10,7 +10,11 @@ import ExtraBox from './extrabox/ExtraBox.vue';
 import Logo from '../logo/LogoDark.vue';
 
 const customizer = useCustomizerStore();
-const sidebarMenu = shallowRef(sidebarItems);
+const sidebarMenu = shallowRef<menu[]>([]);
+onMounted(async () => {
+  sidebarMenu.value = await sidebarItems();
+  console.log(sidebarMenu.value);
+});
 </script>
 
 <template>
@@ -46,9 +50,6 @@ const sidebarMenu = shallowRef(sidebarItems);
           <!---End Single Item-->
         </template>
       </v-list>
-      <div class="pa-4">
-        <ExtraBox />
-      </div>
     </perfect-scrollbar>
   </v-navigation-drawer>
 </template>

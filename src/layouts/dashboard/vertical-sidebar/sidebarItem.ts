@@ -1,15 +1,8 @@
 // icons
 import {
-  QuestionOutlined,
   DashboardOutlined,
-  ChromeOutlined,
-  LoginOutlined,
-  ProfileOutlined,
-  FontSizeOutlined,
-  BgColorsOutlined,
-  BarcodeOutlined,
-  CrownOutlined
 } from '@ant-design/icons-vue';
+import api from '@/utils/helpers/api/api';
 
 export interface menu {
   header?: string;
@@ -34,53 +27,23 @@ const sidebarItem: menu[] = [
     icon: DashboardOutlined,
     to: '/dashboard'
   },
-  { header: 'Authentication' },
-  {
-    title: 'Login',
-    icon: LoginOutlined,
-    to: '/auth/login'
-  },
-  {
-    title: 'Register',
-    icon: ProfileOutlined,
-    to: '/auth/register'
-  },
-  { header: 'Utilities' },
-  {
-    title: 'Typography',
-    icon: FontSizeOutlined,
-    to: '/typography'
-  },
-  {
-    title: 'Color',
-    icon: BgColorsOutlined,
-    to: '/colors'
-  },
-  {
-    title: 'Shadow',
-    icon: BarcodeOutlined,
-    to: '/shadow'
-  },
-  {
-    title: 'Ant Icons',
-    icon: CrownOutlined,
-    to: '/icon/ant'
-  },
-  { header: 'Support' },
-  {
-    title: 'Sample Page',
-    icon: ChromeOutlined,
-    to: '/sample-page'
-  },
-  {
-    title: 'Documentation',
-    icon: QuestionOutlined,
-    to: 'https://codedthemes.gitbook.io/mantis-vuetify/',
-    type: 'external',
-    chip: 'gitbook',
-    chipColor: 'secondary',
-    chipVariant: 'flat'
-  }
 ];
 
-export default sidebarItem;
+async function getSidebarItems(): Promise<menu[]> {
+  const experiments = await api.experiment.getExperiments();
+  console.log('items', experiments);
+  const experimentItems = experiments ? experiments.map(experiment => ({
+    title: experiment.title,
+    // icon: ExperimentOutlined, // Replace with an appropriate icon
+    to: `/experiments/${experiment.id}`
+  })): [];
+
+  return [
+    ...sidebarItem,
+    { header: 'Experiments' },
+    ...experimentItems
+  ];
+}
+
+
+export default getSidebarItems;
