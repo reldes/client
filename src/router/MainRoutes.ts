@@ -1,5 +1,5 @@
 const MainRoutes = {
-  path: '/dashboard',
+  path: '/',
   meta: {
     requiresAuth: true
   },
@@ -11,6 +11,11 @@ const MainRoutes = {
       path: '/dashboard',
       component: () => import('@/views/dashboard/DefaultDashboard.vue')
     },
+    {
+      name: 'Experiments',
+      path: '/experiments/:id',
+      component: () => import('@/views/experiments/Experiment.vue')
+    }
   ]
 };
 

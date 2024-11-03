@@ -36,7 +36,7 @@ export default defineConfig({
     minify: true,
   },
   optimizeDeps: {
-    exclude: ['vuetify'],
+    exclude: ['vuetify', "fsevents"],
     entries: ['./src/**/*.vue']
   }
 });

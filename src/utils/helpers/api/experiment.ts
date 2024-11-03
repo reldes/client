@@ -16,4 +16,7 @@ export default {
   getExperiment(id: number): Promise<Experiment> {
     return request.get(`experiments/${id}`);
   },
+  build(code: string): Promise<Experiment> {
+    return request.post(`experiments/build`, { code });
+  }
 };

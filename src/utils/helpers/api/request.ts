@@ -7,8 +7,11 @@ function request(method: string) {
         /* eslint-disable @typescript-eslint/no-explicit-any */
         const requestOptions: any = {
             method,
+          
             headers: authHeader()
         };
+        console.log('requestOptions', requestOptions);
+        requestOptions.headers['Accept'] = 'application/json';
         if (body) {
             requestOptions.headers['Content-Type'] = 'application/json';
             requestOptions.body = JSON.stringify(body);
@@ -21,8 +24,10 @@ function authHeader() {
     const { token } = useAuthStore();
     const isLoggedIn = token;
     if (isLoggedIn) {
+        console.log('token', token);
         return { Authorization: `Bearer ${token}` };
     } else {
+        console.log('token', null);
         return {};
     }
 }
