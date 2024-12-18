@@ -45,10 +45,11 @@
 <script>
 import api from '@/utils/helpers/api/api';
 import LED from '@/components/templates/LED.vue';
+import Button from '@/components/templates/Button.vue';
 
 export default {
     components: {
-        LED
+        LED, Button
     },
     data() {
         return {

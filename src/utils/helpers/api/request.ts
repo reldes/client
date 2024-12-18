@@ -9,7 +9,7 @@ function request(method: string) {
             method,
           
             headers: authHeader(),
-            mode: 'no-cors'
+            // mode: 'no-cors'
         };
         console.log('requestOptions', requestOptions);
         requestOptions.headers['Accept'] = 'application/json';

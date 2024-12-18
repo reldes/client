@@ -7,8 +7,8 @@
 
         <div class="led-scheme">
             <!-- Placeholder for LED scheme -->
-            <wokwi-led v-for="led in leds" :key="led.id" :color="led.color" :pin="led.pin" :value="led.value" />
-            <wokwi-pushbutton v-for="button in Object.entries(buttons)" :key="button.id" :pressed="button.value"></wokwi-pushbutton>
+            <wokwi-led v-for="led in leds" :key="led.id" :color="led.color" :pin="led.pin" :value="led.value && buttons[led.id].value ? true : false" />
+            <wokwi-pushbutton v-for="button in Object.values(buttons)" :key="button.id" @button-press="clickBtn(button.id)" @button-release="buttonRelease(button.id)"></wokwi-pushbutton>
         </div>
     </div>
     <h1>Build output:</h1>
@@ -24,7 +24,7 @@ import api from '@/utils/helpers/api/api';
 import '@wokwi/elements';
 
 export default {
-    name: 'LED',
+    name: 'Button',
     components: {
         Codemirror
     },
@@ -70,15 +70,19 @@ export default {
         this.code = this.code6LED;
         this.avrRunner = new AVRRunner();
         this.avrRunner.portD.addListener((value) => {
-            console.log('tryupdate', value, 'portD');
             this.updateLEDs(value, 0);
         });
         this.avrRunner.portB.addListener((value) => {
-            console.log('tryupdate', value, 'portB');
             this.updateLEDs(value, 8);
         });
     },
     methods: {
+        buttonRelease(id) {
+            this.buttons[id].value = false;
+        },
+        clickBtn(id) {
+           this.buttons[id].value = true;
+        },
         async sendCode() {
             this.hex = null;
             try {
@@ -107,7 +111,7 @@ export default {
             for (const led of this.leds) {
                 const pin = led.pin;
                 if (pin >= startPin && pin <= startPin + 8) {
-                    led.value = (value & (1 << (pin - startPin))) && this.buttons[led.id].value ? true : false;
+                    led.value = (value & (1 << (pin - startPin))) ? true : false;
                     this.leds.map((led) =>
                         led.pin === pin ? { ...led, value: value & (1 << (pin - startPin)) ? true : false } : led
                     )
