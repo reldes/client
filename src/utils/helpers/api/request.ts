@@ -8,7 +8,8 @@ function request(method: string) {
         const requestOptions: any = {
             method,
           
-            headers: authHeader()
+            headers: authHeader(),
+            mode: 'no-cors'
         };
         console.log('requestOptions', requestOptions);
         requestOptions.headers['Accept'] = 'application/json';
